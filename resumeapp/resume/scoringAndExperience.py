@@ -1,7 +1,9 @@
+import numpy as np
 import pandas as pd
 from resumeapp.resume.cleanText import cleanTextUsingNLP
 from resumeapp.resume.similar import addSimilarKeywords
 from resumeapp.resume.classify import classifyJobProfile
+from resumeapp.resume.simplifyprofile import simplifyJobProfile
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -19,13 +21,12 @@ def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
             language.lower() + "," in cleanedTextAsString or language.lower() + "/" in cleanedTextAsString):
             skillsFound.append(language.lower())
             
-    print("skillsFound before adding similar keywords", skillsFound)
+    #print("skillsFound before adding similar keywords", skillsFound)
     skillsFound = list(set(skillsFound))
     skillsFound = addSimilarKeywords(skillsFound)
     
     #finding the job profile from resume text
-    profile = classifyJobProfile(cleanedTextAsString)
-    
+    profile = classifyJobProfile(extractedText.lower())
     
     #finding the skills from job description
     cleanedJD = cleanTextUsingNLP(jobDescription)
@@ -53,54 +54,26 @@ def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
     
     skillsNotFound = [i for i in relevantSkills if i not in skillsMatched]
     
-    primarySkillList = ["python", "java", "sql", "aws", "spring", "springboot"]
-    primarySkillsInRelevantSkills = [i for i in relevantSkills if i in primarySkillList]
-    secondarySkillsInRelevantSkills = [i for i in relevantSkills if i not in primarySkillList]
-    
-    numberOfPrimarySkills = len(primarySkillsInRelevantSkills)
-    numberOfSecondarySkills = len(secondarySkillsInRelevantSkills)
-    
-    try:
-        pointsPerPrimarySkill = 60 / numberOfPrimarySkills
-    except:
-        pointsPerPrimarySkill = 0
-    try:
-        pointsPerSecondarySkill = 20 / numberOfSecondarySkills
-    except:
-        pointsPerSecondarySkill = 0
-        
-    primarySkillsFoundInResume = [i for i in skillsMatched if i in primarySkillsInRelevantSkills]
-    secondarySkillsFoundInResume = [i for i in skillsMatched if i in secondarySkillsInRelevantSkills]
-    
-    pointsFromPrimarySkills = len(primarySkillsFoundInResume) * pointsPerPrimarySkill
-    pointsFromSecondarySkills = len(secondarySkillsFoundInResume) * pointsPerSecondarySkill
-    
     pointsFromProfile = 0
     jobProfile = jobProfile.lower()
+    jobProfile = simplifyJobProfile(jobProfile)
     
-    for word in jobProfile.split(" "):
-        if word in profile.split(" "):
+    for word in profile:
+        if word in jobProfile.lower():
             print(word)
             pointsFromProfile = 20
-    
-    matchPercent = pointsFromProfile + pointsFromPrimarySkills + pointsFromSecondarySkills
-    
-    matchPercent = round(matchPercent, 2)
-
-    #cleaning skillsFound
+            break
+            
     skillsFound = cleanTextUsingNLP(" ".join(skillsFound))
     skillsFound = skillsFound.split(" ")
     skillsFound = list(set(skillsFound))
     skillsFound = sorted(skillsFound)
     
+    matchPercent2 = len(skillsMatched) / len(relevantSkills) * 100 if pointsFromProfile == 20 else 0
+    matchPercent2 = round(matchPercent2, 2)
     #printing outputs
     print("skillsFound", skillsMatched)
     print("skillsNotFound", skillsNotFound)
     print("pointsFromProfile", pointsFromProfile)
-    print("primarySkillsInRelevantSkills", primarySkillsInRelevantSkills)
-    print("secondarySkillsInRelevantSkills", secondarySkillsInRelevantSkills)
-    print("pointsFromPrimarySkills", pointsFromPrimarySkills)
-    print("pointsFromSecondarySkills", pointsFromSecondarySkills)
-    print("matchPercent", matchPercent)
-    return (relevantSkills,skillsMatched, skillsNotFound, pointsFromProfile, primarySkillsInRelevantSkills,
-            secondarySkillsInRelevantSkills, pointsFromPrimarySkills, pointsFromSecondarySkills, matchPercent)
+    print("matchPercent2", matchPercent2)
+    return (relevantSkills,skillsMatched, skillsNotFound, jobProfile, profile, pointsFromProfile, matchPercent2)

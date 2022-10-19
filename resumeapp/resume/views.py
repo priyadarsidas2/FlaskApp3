@@ -9,7 +9,7 @@ from resumeapp.resume.email import sendEmail
 resume = Blueprint('resume',__name__)
 
 UPLOAD_FOLDER = 'F:\Python\1. Flask\1. Resume Screening\1. Final'
-ALLOWED_EXTENSIONS = {'pdf'}
+ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -28,8 +28,7 @@ def create_post():
         fileName = form.fileName.data
         fileName.save(fileName.filename)
         extractedText = extractTextFromPDF(fileName.filename)
-        (relevantSkills,skillsMatched, skillsNotFound, pointsFromProfile, primarySkillsInRelevantSkills,
-            secondarySkillsInRelevantSkills, pointsFromPrimarySkills, pointsFromSecondarySkills, matchPercent) = scoringAndExperienceCheck(
+        (relevantSkills,skillsMatched, skillsNotFound, jdProfile, resumeProfile, pointsFromProfile, matchPercent2) = scoringAndExperienceCheck(
                                                                             title, extractedText, description)
         #experienceInYears = round(experienceInYears, 2)
         profileStatus = "Match" if pointsFromProfile == 20 else "Mismatch"
@@ -39,15 +38,10 @@ def create_post():
                                     description = description,
                                     fileName = fileName.filename,
                                     relevantSkills = ", ".join(relevantSkills),
-                                    primarySkillsInRelevantSkills = ", ".join(primarySkillsInRelevantSkills),
-                                    secondarySkillsInRelevantSkills = ", ".join(secondarySkillsInRelevantSkills),
                                     skillsMatched = ", ".join(skillsMatched),
                                     skillsNotFound = ", ".join(skillsNotFound),
                                     profileStatus = profileStatus,
-                                    pointsFromProfile = pointsFromProfile,
-                                    pointsFromPrimarySkills = pointsFromPrimarySkills,
-                                    pointsFromSecondarySkills = pointsFromSecondarySkills,
-                                    matchPercent = matchPercent,
+                                    matchPercent2 = matchPercent2,
                                     emailid = emailid
                                 )
         sendEmail(emailid, fileName.filename, htmlPage)

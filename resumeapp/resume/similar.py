@@ -1,18 +1,28 @@
 def addSimilarKeywords(skillsFound):
-    keywords = {"MySQL": ["SQL"], "Oracle SQL": ["SQL"],
+    keywords = {
+        
+                "MySQL": ["SQL"], "Oracle SQL": ["SQL"],
                 "PostgreSQL": ["SQL"], "Angular JS": ["Angular", "AngularJS"],
                 "Angular": ["Angular JS", "AngularJS"], "AngularJS": ["Angular", "Angular JS"],
                 "React JS": ["React", "ReactJS"],
                 "React": ["React JS", "ReactJS"], "ReactJS": ["React", "React JS"],
+                
                 "Node JS": ["Node", "NodeJS", "Node.JS"],"Node": ["Node JS", "NodeJS", "Node.JS"],
                 "NodeJS": ["Node", "Node JS", "Node.JS"], "Data Science": ["Machine Learning"],
+                
                 "Machine Learning": ["Data Science"], "Scikit-learn": ["Scikit learn"],
                 "Artificial Intelligence": ["Machine Learning", "Data Science"],
+                
                 "AWS": ["EC2", "Lambda"], "EC2": ["AWS"], "Lambda": ["AWS"],
                 "Linux": ["Unix"], "Unix": ["Linux"],
                 "HTML5": ["HTML"], "HTML": ["HTML5"],
-                "Javascript": ["JavaScript"], "JavaScript": ["Javascript"] 
+                "Javascript": ["JavaScript"], "JavaScript": ["Javascript"],
+                
+                "Microsoft Dynamics 365": ["Microsoft D365"],
+                "Microsoft D365": ["Microsoft Dynamics 365"],
+                
                 }
+    
     newSkillsFound = skillsFound
     for i in keywords:
         for j in skillsFound:
