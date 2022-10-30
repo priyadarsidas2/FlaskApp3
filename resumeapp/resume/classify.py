@@ -1,20 +1,24 @@
+from gettext import find
+from resumeapp.resume.redisdata import findKeysAndValuesInHash
+
 def classifyJobProfile(cleanedTextAsString):
-    
+    titles = findKeysAndValuesInHash("jobTitles")
+    """
     titles = {
         "Java/J2EE Full Stack Developer": "Java",
         "Full stack Java Developer": "Java",
-        "Java Developer": "Java",  
-        "Sr. Java Developer": "Java", 
+        "Java Developer": "Java",
+        "Sr. Java Developer": "Java",
         "Java Programmer": "Java",
-        "Sr. Full Stack Java Developer": "Java", 
+        "Sr. Full Stack Java Developer": "Java",
         "Java/J2EE Developer": "Java",
         "Java/J2EE Programmer": "Java",
         "Senior Java/J2ee Developer": "Java",
         
         "Software Quality Assurance": "Testing",
-        "Tester": "Testing", 
+        "Tester": "Testing",
         "ETL Tester": "Testing",
-        "Backend SQL Tester": "Testing", 
+        "Backend SQL Tester": "Testing",
         "QA Engineer": "Testing",
         "QA Automation Engineer": "Testing", 
         "QA Selenium Engineer": "Testing",
@@ -209,6 +213,7 @@ def classifyJobProfile(cleanedTextAsString):
          
     }
     
+    
     frequencyOfTitles = {
                         "Java": 0, "Testing": 0, "ETL": 0, "SQL": 0, "Big Data": 0,
                         "Python": 0, "Oracle": 0, "Business": 0, "Frontend": 0,
@@ -217,10 +222,18 @@ def classifyJobProfile(cleanedTextAsString):
                         "Data Analyst": 0, "Security": 0, "ServiceNow": 0,
                         "Azure": 0, "Supply": 0, "Risk": 0, "Agile": 0
                          }
+    """
+    domains = list(set(titles.values()))
+    frequencyOfTitles = {}
+    
+    for i in domains:
+        frequencyOfTitles[i] = 0
+    
+    print("frequencyOfTitles", frequencyOfTitles)
     
     for title in titles:
         countOfOccurances = cleanedTextAsString.count(title.lower())
-        print(countOfOccurances)
+        #print(countOfOccurances)
         thisTitle = titles[title]
         frequencyOfTitles[thisTitle] += countOfOccurances
 

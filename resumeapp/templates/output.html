@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-
     <div class="jumbotron">
         <div align='center'>
             <h1 >Scoring Report</h1>
@@ -35,14 +34,29 @@
 
             <p><b>Score: </b> {{matchPercent2}} </p>
             <br>
-
-            <p>
-              <br><br>
-            </p>
             <br>
 
-            <p>The scoring report has been sent to {{emailid}}</p>
+            <p>The scoring report has been sent to {{emailid}}</p><br>
+
+            <p><b>Potential Skills: </b> </p>
+            
+            
+            <form method= "POST" action= "{{ url_for('resume.scoring_report') }}">
+                {% for i in range (0, ngrams|length) %}
+                    <input type="checkbox" value = {{ i }} name="mycheckbox"> {{ngrams[i]}} &ensp;
+                    {% if i != 0 and i%8 == 0 %}
+                        <br>
+                    {% endif %}
+                    
+                {% endfor %}
+                
+                <br><br>
+                <p><input type="submit" value="Update Skills Database"></p>
+            </form>
         </div>
     </div>
-
+    <a href="{{ url_for('resume.create_post') }}">
+        <button type="button" class="btn btn-primary">Back</button>
+    </a>
+    <br><br><br><br><br><br><br><br><br><br>
 {% endblock content %}

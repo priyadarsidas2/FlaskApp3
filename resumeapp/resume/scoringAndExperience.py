@@ -1,22 +1,36 @@
+import os, sys
+sys.path.insert(0, os.path.abspath("../../"))
+
 import numpy as np
 import pandas as pd
 from resumeapp.resume.cleanText import cleanTextUsingNLP
 from resumeapp.resume.similar import addSimilarKeywords
 from resumeapp.resume.classify import classifyJobProfile
 from resumeapp.resume.simplifyprofile import simplifyJobProfile
+from resumeapp.resume.redisdata import findAllSkillsInSet
+from resumeapp.resume.findkeywords import findMatchingKeywords
+
 import warnings
 warnings.filterwarnings("ignore")
 
 def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
-    df = pd.read_excel("SkillsList.xlsx")
-    
+    #df = pd.read_excel("SkillsList.xlsx")
+    languages1 = findAllSkillsInSet("Skills")
+    languages1 = [i.lower() for i in languages1]
+    try:
+        languages2 = findAllSkillsInSet("Skills2")
+        languages2 = [i.lower() for i in languages2]
+        languages = languages1 + languages2
+    except:
+        languages = languages1
     #skills in resume
     cleanedTextAsString = cleanTextUsingNLP(extractedText)
     cleanedTextAsString = cleanedTextAsString.lower()
     
     print(cleanedTextAsString)
     skillsFound = []
-    for language in df['Skills']:
+    #for language in df['Skills']:
+    for language in languages:
         if (language.lower() + " " in cleanedTextAsString or language.lower() + "\n" in cleanedTextAsString or 
             language.lower() + "," in cleanedTextAsString or language.lower() + "/" in cleanedTextAsString):
             skillsFound.append(language.lower())
@@ -32,7 +46,7 @@ def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
     cleanedJD = cleanTextUsingNLP(jobDescription)
     cleanedJD = cleanedJD.lower()
     relevantSkills = []
-    for language in df['Skills']:
+    for language in languages:
         
         if (language.lower() + " " in cleanedJD or language.lower() + "\n" in cleanedJD or 
             language.lower() + "," in cleanedJD or language.lower() + "/" in cleanedJD):
@@ -71,9 +85,13 @@ def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
     
     matchPercent2 = len(skillsMatched) / len(relevantSkills) * 100 if pointsFromProfile == 20 else 0
     matchPercent2 = round(matchPercent2, 2)
+    ngrams = findMatchingKeywords(extractedText, jobDescription, languages)
+    
+    
     #printing outputs
     print("skillsFound", skillsMatched)
     print("skillsNotFound", skillsNotFound)
     print("pointsFromProfile", pointsFromProfile)
     print("matchPercent2", matchPercent2)
-    return (relevantSkills,skillsMatched, skillsNotFound, jobProfile, profile, pointsFromProfile, matchPercent2)
+    print("languages", languages)
+    return (relevantSkills,skillsMatched, skillsNotFound, jobProfile, profile, pointsFromProfile, matchPercent2, ngrams)

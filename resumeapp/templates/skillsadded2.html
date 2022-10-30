@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="jumbotron">
+        <h1>Skills Added </h1>
+    </div>
+
+    <div class="container">
+    <p><b>Successfully added to database:</b></p>
+    <p>{{ skillsToBeAdded }}</p>
+    </div>
+
+    <a href="{{ url_for('resume.create_post') }}">
+        <button type="button" class="btn btn-primary">Back</button>
+    </a>
+
+    <br><br><br><br><br><br><br><br><br><br>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="jumbotron">
+        <h1>Job Title Added </h1>
+    </div>
+
+    <div class="container">
+    <p><b>Successfully added to database:</b></p>
+    <p>{{ title }} {{ ':' }} {{ domain }}</p>
+    </div>
+
+    <a href="{{ url_for('resume.add_titles') }}">
+        <button type="button" class="btn btn-primary">Back</button>
+    </a>
+
+    <br><br><br><br><br><br><br><br><br><br>
+{% endblock content %}

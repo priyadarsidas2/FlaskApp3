@@ -1,9 +1,9 @@
 import smtplib, ssl
+import email
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import webbrowser
 import pdfkit
-import email
 
 def sendEmail(emailid, fileName, htmlPage):
     #emailid, fileName, description, experience, primarySkill, secondarySkill, skillsFound,
