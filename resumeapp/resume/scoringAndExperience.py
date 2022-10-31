@@ -18,7 +18,7 @@ def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
     languages1 = findAllSkillsInSet("Skills")
     languages1 = [i.lower() for i in languages1]
     try:
-        languages2 = findAllSkillsInSet("Skills2")
+        languages2 = findAllSkillsInSet("SkillsStaging")
         languages2 = [i.lower() for i in languages2]
         languages = languages1 + languages2
     except:

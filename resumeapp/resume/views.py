@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 common_ngram = ''
 
-@resume.route('/', methods=['GET','POST'])
+@resume.route('/home', methods=['GET','POST'])
 def create_post():
     form = ResumeForm()
 
@@ -70,7 +70,7 @@ def scoring_report():
             print("i", i)
             skillsToBeAdded.append(common_ngram[i])
         for j in skillsToBeAdded:
-            addValueToSet("Skills2", j)
+            addValueToSet("SkillsStaging", j)
         
         return render_template('skillsadded2.html', skillsToBeAdded = ", ".join(skillsToBeAdded))
     return 'Not Done'
@@ -86,7 +86,7 @@ def find_skills():
         skill = form.skill.data
         skill = skill.lower()
         #search for the skill in database
-        allSkills = findAllSkillsInSet("Skills") + findAllSkillsInSet("Skills2")
+        allSkills = findAllSkillsInSet("Skills") + findAllSkillsInSet("SkillsStaging")
         print(allSkills)
         allSkills = [i.lower() for i in allSkills]
         if skill in allSkills:
@@ -102,7 +102,7 @@ def find_skills():
 
 @resume.route('/addskill', methods=['GET','POST'])
 def add_skill():
-    addValueToSet("Skills2", common_skill)
+    addValueToSet("SkillsStaging", common_skill)
     return render_template('skilladded.html', skillsToBeAdded = common_skill)
 
 commontitlesDict = {}
@@ -117,7 +117,7 @@ def find_title():
         title = title.lower()
         titlesDict = {}
         #search for the job titles in database
-        allTitles = {**(findKeysAndValuesInHash("jobTitles")), **(findKeysAndValuesInHash("jobTitles2"))}
+        allTitles = {**(findKeysAndValuesInHash("jobTitles")), **(findKeysAndValuesInHash("jobTitlesStaging"))}
         print(allTitles)
         #allTitles = [i.lower() for i in allTitles]
         for i in allTitles: #allTitles -> 
@@ -144,7 +144,7 @@ def add_titles():
     if form.validate_on_submit():
         title = form.title.data
         domain = form.domain.data
-        addValueToHash("jobTitles2", title, domain)
+        addValueToHash("jobTitlesStaging", title, domain)
         message = "Successfully added to database: " + title + ":" + domain
         return render_template('titlesaddedsuccess.html', title = title, domain = domain)
     

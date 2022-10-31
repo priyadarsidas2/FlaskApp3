@@ -23,7 +23,7 @@ def register():
     return render_template('register.html', form=form)
 
 #login
-@users.route("/login", methods=["GET", "POST"])
+@users.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     

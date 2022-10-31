@@ -2,7 +2,7 @@ from gettext import find
 from resumeapp.resume.redisdata import findKeysAndValuesInHash
 
 def classifyJobProfile(cleanedTextAsString):
-    titles = findKeysAndValuesInHash("jobTitles")
+    titles = {**(findKeysAndValuesInHash("jobTitles")), **(findKeysAndValuesInHash("jobTitlesStaging"))}
     """
     titles = {
         "Java/J2EE Full Stack Developer": "Java",
