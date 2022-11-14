@@ -5,9 +5,8 @@ from email.mime.multipart import MIMEMultipart
 import webbrowser
 import pdfkit
 
+
 def sendEmail(emailid, fileName, htmlPage):
-    #emailid, fileName, description, experience, primarySkill, secondarySkill, skillsFound,
-    #                skillsNotFound, experienceInYears, pointsAchieved, pointsLost, matchPercent,
     sender_email = "priyadarsidas7@gmail.com"
     receiver_email = emailid
     password = 'gzhjwebpkwkewzyd'

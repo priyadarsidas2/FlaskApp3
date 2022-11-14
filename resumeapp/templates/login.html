@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <div class="jumbotron">
+<!--
+    <div class="jumbotron jumbotron-fluid">
         <h1>Login</h1>
     </div>
-
-    <div class="container">
+-->
+    <br><br>
+    <div class="centered-container">
+        <h1> Resume Screening App </h1>
+    </div><br><br>
+    
+    <div class="container-fluid-centered">
         <form class="form-group" method="POST">
             
             {{form.hidden_tag()}}
@@ -25,5 +30,10 @@
             </div>
 
         </form>
+
+        <a href="{{ url_for('users.register') }}">
+            <button type="button" class="btn btn-dark">Sign Up</button>
+        </a>
+
     </div>
 {% endblock %}

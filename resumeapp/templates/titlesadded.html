@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <div class="jumbotron">
+<!--
+    <div class="jumbotron jumbotron-fluid">
         <h1>Add Job Title </h1>
     </div>
-
-    <div class="container">
+-->
+    <br>
+    <div class="container-fluid">
         <form class="form-group" method="POST">
             {{form.hidden_tag()}}
 
@@ -23,13 +24,15 @@
             {{form.submit(class="btn btn-outline-info")}}
             </div>
         </form>
-    </div>
+    
 
     <b>{{ message }}</b>
 
     <br><br>
 
     <i>Note: Enter the new Job Title and the respective domain to add them to the database.</i> 
-
+    
+    </div>
+    
     <br><br><br><br><br><br><br><br><br><br>
 {% endblock content %}

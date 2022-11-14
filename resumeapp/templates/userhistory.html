@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <br><br>
+
+    <div class="centered-container">
+        <div align='center'>
+            <h1>Analysis Report History</h1>
+        </div>
+    </div><br><br>
+    
+    <div class="tablediv">
+    <table>
+        <th>Job Title</th>
+        <th>File Name</th>
+        <th>Skills Required</th>
+        <th>Skills Found</th>
+        <th>Skills Not Found</th>
+        <th>Match Percentage</th>
+
+    {% for key,value in df.iterrows() %}
+    <tr>
+        <td>{{ value['title'] }}</td>
+        <td>{{ value['fileName'] }}</td>
+        <td>{{ value['relevantSkills'] }}</td>
+        <td>{{ value['skillsMatched'] }}</td>
+        <td>{{ value['skillsNotFound'] }}</td>
+        <td>{{ value['matchPercent2'] }}</td>
+
+    </tr>
+    {% endfor %}
+
+    </table>
+    </div>
+    <br><br>
+
+    <a href="{{ url_for('resume.create_post') }}">
+        <button type="button" class="btn btn-primary">Back</button>
+    </a>
+    </div>
+
+    
+
+    <br><br><br><br><br><br><br><br><br><br>
+
+{% endblock content %}

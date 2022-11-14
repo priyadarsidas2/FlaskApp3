@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <div class="jumbotron">
+<!--
+    <div class="jumbotron jumbotron-fluid">
         <h1>Search Job Titles</h1>
     </div>
-    
-    <div class="container">
+    -->
+    <br>
+    <div class="container-fluid">
         <form class="form-group" method="POST">
             
             {{form.hidden_tag()}}
@@ -43,12 +44,13 @@
 
     {% endif %}
 
-    
-    </div>
     <br><br>
     <i>Note: Check to find out if a Job Title already exists in the database. If the Job Title is unavailable, you can click on the 
         "Add Job Title To Database" button after the search. You will be redirected to the next page to add the new Job Title.</i>
 
+    
+    </div>
+    
     <br><br><br><br><br><br><br><br><br><br>
 
 {% endblock content %}

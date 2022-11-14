@@ -2,74 +2,115 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <meta charset="utf-8">
+    
     <title></title>
+    
   </head>
   <body>
-  
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
 
-          {% if current_user.is_authenticated %}
+    <div id="preloader"></div>
+    <div class="background-image"></div>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('resume.create_post') }}">Home</a>
-          </li>
-      
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('users.account')}}">Account</a>
-          </li>
+    {% if current_user.is_authenticated %}
+            <div class="navigationbar">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+              <a class="navbar-brand" href="#"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('resume.create_post') }} " > <b> Home </b></a>
+              </li> &nbsp;
           
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('resume.find_skills')}}">Search / Add Skills</a>
-          </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.account')}}" > <b> Account </b></a>
+              </li> &nbsp;
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('resume.find_skills')}}" > <b> Search / Add Skills </b></a>
+              </li> &nbsp;
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('resume.find_title')}}">Search Job Titles</a>
-          </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('resume.find_title')}}" > <b> Search Job Titles </b></a>
+              </li> &nbsp;
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('resume.add_titles')}}">Add Job Titles</a>
-          </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('resume.add_titles')}}" > <b> Add Job Titles </b></a>
+              </li> &nbsp;
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('users.logout')}}">Log Out</a>
-          </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('resume.userHistory')}}" > <b> Analysis Reports </b></a>
+              </li> &nbsp;
+
+              {% if current_user.category == "admin" %}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.logout')}}" > <b> Skill DB </b></a>
+              </li> &nbsp;
+
+              li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.logout')}}" > <b> Skill DB </b></a>
+              </li> &nbsp;
+
+              {% elif current_user.category == "super-admin" %}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.logout')}}" > <b> Skill DB </b></a>
+              </li> &nbsp;
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.logout')}}" > <b> Title DB </b></a>
+              </li> &nbsp;
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.logout')}}" > <b> User Authorization </b></a>
+              </li> &nbsp;
+
+              {% endif %}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('users.logout')}}" > <b> Log Out </b></a>
+              </li> &nbsp;
           
-          {% else %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('users.login')}}">Log In</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('users.register')}}">Register</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('core.info') }}">About</a>
-          </li>
-
           {% endif %}
         </ul>
       </div>
       </nav>
-          <div class="container">
+    </div>
+          <div class="container-xxl">
             {% block content %}
           
             {% endblock %}
           </div>
 
+      
 
-
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename= 'js/index.js') }}"></script>
 
   </body>
 </html>
+
+
+<!--
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('users.login')}}" > <b> Log In </b></a>
+          </li> &nbsp;
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('users.register')}}" > <b> Register </b></a>
+          </li> &nbsp;
+          
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('core.info') }}" > <b> About </b></a>
+          </li> &nbsp;
+-->

@@ -1,0 +1,94 @@
+body {
+    background-color: #F7F7F7;
+    background-image: url(../images/abstract2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-fluid {
+    padding-right: 350px;
+    padding-left: 50px;
+}
+
+.jumbotron {
+    background-color: #256D85;
+    padding-left: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: Monaco, "Lucida Console", Monospace;
+    color: white;
+}
+
+.navbar {
+    background-color: #404258;
+    opacity: 0.9;
+}
+
+.nav-item {
+    font-family: "Monaco", "Verdana", Sans-serif;
+    font-size: 14px;
+    box-shadow: inset 0 0 0 0 #98A8F8;
+    color: #98A8F8;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+
+.nav-item:hover {
+    /*background-color: #624F82;
+    transform: scale(1.1);*/
+    color: #fff;
+    box-shadow: inset 200px 0 0 0 #98A8F8;
+
+}
+
+#preloader{
+    background: white url(../images/loader1.gif) no-repeat center center;
+    background-size: 30%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index:100;
+}
+
+.centered-container {
+    text-align: center;
+    color: #474E68;
+}
+
+.container-fluid-centered {
+    text-align: center;
+    padding-right: 450px;
+    padding-left: 450px;
+}
+
+table {
+
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    counter-reset: rowNumber;
+  }
+  
+  
+  td, th {
+  
+    border: 1px solid #dddddd;
+  
+    text-align: left;
+  
+    padding: 8px;
+  
+  }
+  
+  
+  tr:nth-child(even) {
+  
+    background-color: #dddddd;
+  
+  }
+
+  .tablediv {
+    padding-left: 40px;
+    padding-right: 40px;
+  }

@@ -14,7 +14,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
-    #df = pd.read_excel("SkillsList.xlsx")
     languages1 = findAllSkillsInSet("Skills")
     languages1 = [i.lower() for i in languages1]
     try:
@@ -23,19 +22,18 @@ def scoringAndExperienceCheck(jobProfile, extractedText, jobDescription):
         languages = languages1 + languages2
     except:
         languages = languages1
-    #skills in resume
+    
     cleanedTextAsString = cleanTextUsingNLP(extractedText)
     cleanedTextAsString = cleanedTextAsString.lower()
     
     print(cleanedTextAsString)
     skillsFound = []
-    #for language in df['Skills']:
+    
     for language in languages:
         if (language.lower() + " " in cleanedTextAsString or language.lower() + "\n" in cleanedTextAsString or 
             language.lower() + "," in cleanedTextAsString or language.lower() + "/" in cleanedTextAsString):
             skillsFound.append(language.lower())
-            
-    #print("skillsFound before adding similar keywords", skillsFound)
+    
     skillsFound = list(set(skillsFound))
     skillsFound = addSimilarKeywords(skillsFound)
     

@@ -1,32 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="jumbotron">
-        <h1>Register</h1>
-    </div>
 
-    <div class="container">
+    <br>
+    <div class="centered-container">
+        <h1> Sign Up </h1>
+    </div>
+    <br>
+    <div class="container-fluid-centered">
         <form class="form-group" method="POST">
 
             {{form.hidden_tag()}}
 
             <div class="form-group">
             {{form.email.label(class="form-control-label")}}
-            {{form.email(class="form-control form-control-lg ")}}<br>
+            {{form.email(class="form-control form-control-lg ")}}
             </div>
             
             <div class="form-group">
             {{form.username.label(class="form-control-label")}}
-            {{form.username(class="form-control form-control-lg ")}}<br>
+            {{form.username(class="form-control form-control-lg ")}}
             </div>
 
             <div class="form-group">
             {{form.password.label(class="form-control-label")}}
-            {{form.password(class="form-control form-control-lg ")}}<br>
+            {{form.password(class="form-control form-control-lg ")}}
             </div>
 
             <div class="form-group">
             {{form.pass_confirm.label(class="form-control-label")}}
-            {{form.pass_confirm(class="form-control form-control-lg ")}}<br>
+            {{form.pass_confirm(class="form-control form-control-lg ")}}
             </div>
 
             <div class="form-group">
@@ -34,5 +36,9 @@
             </div>
 
         </form>
+        <a href="{{ url_for('users.login') }}">
+            <button type="button" class="btn btn-dark"> Sign In</button>
+        </a>
     </div>
+    <br><br><br><br><br><br>
 {% endblock %}

@@ -1,4 +1,3 @@
-from email import message
 import redis
 
 redis_host = 'redis-15952.c13.us-east-1-3.ec2.cloud.redislabs.com'
@@ -14,7 +13,7 @@ def removeValueFromSet(setName, value):
     message = r.srem(setName, value)
     return message
 
-def findValueInSet(setName, value):
+def findIfValueExistsInSet(setName, value):
     message = r.sismember(setName, value)
     return message
 
@@ -31,9 +30,14 @@ def removeValueFromHash(hashName, key, value):
     message = r.hdel(hashName, key, value)
     return message
 
-def findValueInHash(hashName, key):
+def findIfValueExistsInHash(hashName, key):
     message = r.hexists(hashName, key)
     return message
+
+def findValueInHash(hashName, key):
+    message = r.hget(hashName, key)
+    message = str(message)
+    return message[2:-1]
 
 def findKeysInHash(hashName):
     message = r.hkeys(hashName)
@@ -52,7 +56,6 @@ def findKeysAndValuesInHash(hashName):
         jobTitles[i.decode()] = message[i].decode()
     return jobTitles
 
-
-#if __name__ == "__main__":
-#    redis_string()
-    
+def findLengthOfHash(hashName):
+    length = r.hlen(hashName)
+    return length

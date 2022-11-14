@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="jumbotron">
+    <br><br>
+    <div class="centered-container">
         <div align='center'>
             <h1 >Scoring Report</h1>
         </div>
     </div>
-
-    <div class="jumbotron">
+    <br>
+    <div class="container-fluid">
         <div align='left'>
-
             <p><b>Job Title</b></p>
             {{title}}
             <br><br>
@@ -53,10 +53,14 @@
                 <br><br>
                 <p><input type="submit" value="Update Skills Database"></p>
             </form>
+
+            <br>
+            <a href="{{ url_for('resume.create_post') }}">
+                <button type="button" class="btn btn-primary">Back</button>
+            </a>
+            
         </div>
     </div>
-    <a href="{{ url_for('resume.create_post') }}">
-        <button type="button" class="btn btn-primary">Back</button>
-    </a>
+    
     <br><br><br><br><br><br><br><br><br><br>
 {% endblock content %}

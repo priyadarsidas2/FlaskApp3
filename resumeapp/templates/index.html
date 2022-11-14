@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="jumbotron" align="left">
+<!--
+  <div class="jumbotron jumbotron-fluid" align="left">
     <h1>Resume Screening App</h1>
   </div>
-
-  <div class="container">
+-->
+    <br>
+  <div class="container-fluid">
       <form class="form-group" enctype=multipart/form-data method="POST">
           {{ form.hidden_tag() }}
 
@@ -15,7 +17,7 @@
 
       <div class="form-group">
           {{ form.description.label(class="form-control-label") }}
-          {{ form.description(class="form-control form-control-lg") }}
+          {{ form.description(class="form-control form-control-lg", rows='5') }}
       </div>
 
       <div class="form-group">
@@ -24,8 +26,7 @@
       </div>
 
       <div class="form-group">
-          {{ form.fileName.label(class="form-control-label") }}
-          <p>Upload a Resume</p>
+          {{ form.fileName.label(class="form-control-label") }}<br>
           {{form.fileName()}}
       </div>
 

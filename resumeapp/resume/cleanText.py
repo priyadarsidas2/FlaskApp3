@@ -13,6 +13,7 @@ stopset = set(nltk.corpus.stopwords.words('english'))
 import string
 punct = string.punctuation
 
+
 def cleanTextUsingNLP(extractedText):
     #remove stopwords
     cleaned_text = []

@@ -2,11 +2,16 @@ import os
 from flask import Flask, flash, request, redirect, url_for
 from resumeapp.resume.forms import ResumeForm, SkillsForm, TitlesForm, TitlesAddForm
 from flask import Blueprint, render_template
+from flask_login import login_required, current_user
 from resumeapp.resume.readpdf import extractTextFromPDF
 from resumeapp.resume.scoringAndExperience import scoringAndExperienceCheck
 from resumeapp.resume.emailconfig import sendEmail
-from resumeapp.resume.redisdata import addValueToSet, findAllSkillsInSet, findKeysAndValuesInHash, addValueToHash
-
+from resumeapp.resume.redisdata import (addValueToSet, findAllSkillsInSet, findKeysAndValuesInHash, 
+                                        addValueToHash, findAllValuesInHash)
+from resumeapp.resume.s3integration import uploadFileToS3
+from resumeapp.resume.filedatabase import updateFileDatabase
+import re
+import pandas as pd
 
 resume = Blueprint('resume',__name__)
 
@@ -19,22 +24,20 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 common_ngram = ''
 
 @resume.route('/home', methods=['GET','POST'])
+@login_required
 def create_post():
     form = ResumeForm()
 
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        #experience = form.experience.data
-        #primarySkill = form.primarySkill.data
-        #secondarySkill = form.secondarySkill.data
         emailid = form.emailid.data
         fileName = form.fileName.data
         fileName.save(fileName.filename)
         extractedText = extractTextFromPDF(fileName.filename)
+        file_url, dateToday = uploadFileToS3(fileName.filename)
         (relevantSkills,skillsMatched, skillsNotFound, jdProfile, resumeProfile, pointsFromProfile, matchPercent2, ngrams) = scoringAndExperienceCheck(
                                                                             title, extractedText, description)
-        #experienceInYears = round(experienceInYears, 2)
         profileStatus = "Match" if pointsFromProfile == 20 else "Mismatch"
         #fileName.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
         htmlPage = render_template('output.html',form=form,
@@ -54,11 +57,15 @@ def create_post():
         common_ngram = ngrams
         print("common_ngram", common_ngram)
         print("ngrams", ngrams)
-        #deleteOutputFiles()
+        updateFileDatabase(title, description, emailid, fileName.filename, extractedText, file_url,
+                           relevantSkills, skillsMatched, skillsNotFound, pointsFromProfile,
+                           matchPercent2, ngrams, dateToday)
+        #deletefilefromec2
         return htmlPage
     return render_template('index.html',form=form)
 
 @resume.route('/scoring', methods=['GET','POST'])
+@login_required
 def scoring_report():
     if request.method == "POST":
         skillsIndex = request.form.getlist('mycheckbox')
@@ -78,6 +85,7 @@ def scoring_report():
 common_skill = ''
 
 @resume.route('/skills', methods=['GET','POST'])
+@login_required
 def find_skills():
     form = SkillsForm()
     
@@ -101,6 +109,7 @@ def find_skills():
                            form_action_url = url_for('resume.add_skill'))
 
 @resume.route('/addskill', methods=['GET','POST'])
+@login_required
 def add_skill():
     addValueToSet("SkillsStaging", common_skill)
     return render_template('skilladded.html', skillsToBeAdded = common_skill)
@@ -108,6 +117,7 @@ def add_skill():
 commontitlesDict = {}
 
 @resume.route('/jobtitles', methods=['GET','POST'])
+@login_required
 def find_title():
     form = TitlesForm()
     
@@ -138,6 +148,7 @@ def find_title():
     return render_template("findtitles.html", form = form, titlesFound = titlesFound)
 
 @resume.route('/addjobtitle', methods=['GET','POST'])
+@login_required
 def add_titles():
     form = TitlesAddForm()
     
@@ -149,3 +160,21 @@ def add_titles():
         return render_template('titlesaddedsuccess.html', title = title, domain = domain)
     
     return render_template('titlesadded.html', form = form)
+
+@resume.route('/userhistory', methods=['GET','POST'])
+@login_required
+def userHistory():
+    user = current_user.id
+    fileNames = findAllSkillsInSet(str(user) + "files")
+    details = []
+    for i in fileNames:
+        data = findKeysAndValuesInHash(i)
+        print(type(data))
+        details.append(data)
+    df = pd.DataFrame(details)
+    print(df)
+    #page = request.args.get('page', 1, type=int)
+    #detailsPaginated = details.paginate(page=page, per_page=10)
+    #for i in range(0, len(data)):
+    
+    return render_template('userhistory.html', df = df)

@@ -8,11 +8,8 @@ class ResumeForm(FlaskForm):
     # we'll grab the date automatically from the Model later
     title = StringField('Job Title', validators=[DataRequired()])
     description = TextAreaField('Job Description', validators=[DataRequired()])
-    #experience = IntegerField('Minimum Experience', validators=[DataRequired()])
-    #primarySkill = StringField('Primary Skill', validators=[DataRequired()])
-    #secondarySkill = StringField('Secondary Skill', validators=[DataRequired()])
     emailid = StringField('Email Id for Report', validators=[DataRequired()])
-    fileName = FileField('Resume', validators=[DataRequired()])
+    fileName = FileField('Upload Resume', validators=[DataRequired()])
     submit = SubmitField('Evaluate')
 
 class SkillsForm(FlaskForm):

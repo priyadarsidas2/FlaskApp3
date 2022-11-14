@@ -7,8 +7,6 @@ def extractTextFromPDF(fileName):
         pdfFileObj = open(fileName, 'rb')
         # creating a pdf reader object
         pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-        # printing number of pages in pdf file
-        # print(pdfReader.numPages)
 
         extractedText = ''
         for i in range(pdfReader.numPages):

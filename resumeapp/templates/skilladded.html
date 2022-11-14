@@ -1,18 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <div class="jumbotron">
+<!--
+    <div class="jumbotron jumbotron-fluid">
         <h1>Skills Added </h1>
     </div>
-
-    <div class="container">
+-->
+    <br>
+    <div class="container-fluid">
     <p><b>Successfully added to database:</b></p>
     <p>{{ skillsToBeAdded }}</p>
-    </div>
 
     <a href="{{ url_for('resume.find_skills') }}">
         <button type="button" class="btn btn-primary">Back</button>
     </a>
+    </div>
+
+    
 
     <br><br><br><br><br><br><br><br><br><br>
 {% endblock content %}

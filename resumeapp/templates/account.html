@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class = "jumbotron">
+<!--
+    <div class = "jumbotron jumbotron-fluid">
         <div align = 'left'>
             <h1>Welcome {{current_user.username}}</h1>
         </div>
+-->
+    <br>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <form class="form-group" method="POST">
             {{form.hidden_tag()}}
 
